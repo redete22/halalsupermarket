@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دكان الحلال للحلويات</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+        }
+        nav {
+            margin: 20px;
+        }
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .section {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .product {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 200px;
+            text-align: center;
+        }
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .product button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        input[type="text"], input[type="email"] {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button.submit-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .order-summary {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>دكان الحلال للحلويات</h1>
+    </header>
+
+    <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#products">المنتجات</a>
+        <a href="#order">طلب ودفع عند الاستلام</a>
+        <a href="#contact">تواصل معنا</a>
+    </nav>
+
+    <!-- الصفحة الرئيسية -->
+    <section id="home" class="section">
+        <h2>مرحبًا بكم في دكان الحلال للحلويات</h2>
+        <p>استمتع بأشهى الحلويات الحلال. نوفر منتجات عالية الجودة تناسب جميع الأذواق.</p>
+    </section>
+
+    <!-- قسم المنتجات -->
+    <section id="products" class="section">
+        <h2>المنتجات</h2>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="حلوى بريك">
+            <p>حلوى بريك</p>
+            <p>السعر: 10 دراهم</p>
+            <button onclick="addToCart('حلوى بريك', 10)">إضافة إلى السلة</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="حلوى كيتكات">
+            <p>حلوى كيتكات</p>
+            <p>السعر: 8 دراهم</p>
+            <button onclick="addToCart('حلوى كيتكات', 8)">إضافة إلى السلة</button>
+        </div>
+        <div class="product">
+            <img src="https://via.placeholder.com/150" alt="حلوى أسد">
+            <p>حلوى أسد</p>
+            <p>السعر: 12 درهم</p>
+            <button onclick="addToCart('حلوى أسد', 12)">إضافة إلى السلة</button>
+        </div>
+    </section>
+
+    <!-- طلب ودفع عند الاستلام -->
+    <section id="order" class="section">
+        <h2>طلب ودفع عند الاستلام</h2>
+        <form onsubmit="submitOrder(event)">
+            <div class="form-group">
+                <input type="text" id="name" placeholder="الاسم الكامل" required>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" placeholder="البريد الإلكتروني" required>
+            </div>
+            <div class="form-group">
+                <input type="text" id="address" placeholder="العنوان" required>
+            </div>
+            <button type="submit" class="submit-btn">إرسال الطلب</button>
+        </form>
+        <div id="orderSummary" class="order-summary" style="display: none;"></div>
+    </section>
+
+    <!-- تواصل معنا -->
+    <section id="contact" class="section">
+        <h2>تواصل معنا</h2>
+        <p>يمكنكم التواصل معنا عبر الهاتف أو البريد الإلكتروني لأي استفسارات.</p>
+        <p>رقم الهاتف: 0501234567</p>
+        <p>البريد الإلكتروني: info@halalsweets.com</p>
+    </section>
+
+    <script>
+        let cart = [];
+
+        // إضافة المنتج إلى السلة
+        function addToCart(productName, price) {
+            cart.push({ name: productName, price: price });
+            alert("تمت إضافة " + productName + " إلى السلة. السعر: " + price + " درهم.");
+        }
+
+        // حساب المجموع النهائي وعرض تفاصيل الطلب
+        function submitOrder(event) {
+            event.preventDefault();
+            const name = document.getElementById("name").value;
+            const email = document.getElementById("email").value;
+            const address = document.getElementById("address").value;
+
+            let totalAmount = cart.reduce((total, item) => total + item.price, 0);
+            let orderDetails = `<h3>ملخص الطلب</h3>
+                                <p><strong>الاسم:</strong> ${name}</p>
+                                <p><strong>البريد الإلكتروني:</strong> ${email}</p>
+                                <p><strong>العنوان:</strong> ${address}</p>
+                                <p><strong>تفاصيل المنتجات:</strong></p><ul>`;
+
+            cart.forEach(item => {
+                orderDetails += `<li>${item.name}: ${item.price} درهم</li>`;
+            });
+
+            orderDetails += `</ul><p><strong>المجموع الكلي:</strong> ${totalAmount} درهم</p>`;
+            document.getElementById("orderSummary").innerHTML = orderDetails;
+            document.getElementById("orderSummary").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
